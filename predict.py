@@ -7,6 +7,7 @@ import cProfile
 import pstats
 from pstats import SortKey
 import time
+from flask import Flask, render_template, request
 
 from cog import BasePredictor, Input, Path, BaseModel
 
@@ -14,6 +15,23 @@ import whisper
 from whisper.model import Whisper, ModelDimensions
 from whisper.tokenizer import LANGUAGES, TO_LANGUAGE_CODE
 from whisper.utils import format_timestamp
+
+app = Flask(__name__)
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        # Retrieve the uploaded audio file from the HTML form
+        audio_file = request.files['audio']
+
+        # Process the audio file and obtain the model predictions
+        model_output = process_audio(audio_file)
+
+        # Render the results template with the model output
+        return render_template('results.html', output=model_output)
+    else:
+        # Render the main HTML form
+        return render_template('index.html')
 
 
 class ModelOutput(BaseModel):
@@ -36,6 +54,14 @@ class Predictor(BasePredictor):
             self.model.load_state_dict(checkpoint["model_state_dict"])
             self.model.to("cuda")
 
+    def process_audio(audio_file):
+    # Perform the necessary processing and model prediction
+    # ...
+
+    # Return the model output
+    return model_output
+
+    
     def predict(
         self,
         audio: Path = Input(description="Audio file"),
@@ -159,3 +185,6 @@ def write_srt(transcript):
         result += f"{segment['text'].strip().replace('-->', '->')}\n"
         result += "\n"
     return result
+    
+if __name__ == '__main__':
+    app.run()
