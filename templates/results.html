@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Model Results</title>
+</head>
+<body>
+    <h1>Model Results</h1>
+    <p>Detected Language: {{ output.detected_language }}</p>
+    <p>Transcription: {{ output.transcription }}</p>
+    {% if output.translation %}
+    <p>Translation: {{ output.translation }}</p>
+    {% endif %}
+</body>
+</html>
