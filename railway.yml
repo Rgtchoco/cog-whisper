@@ -1,0 +1,11 @@
+version: 2
+environments:
+  production:
+    image: python:3.9
+    services:
+      - name: cog
+        env:
+          - COG_YAML: ${{ secrets.COG_YAML }}
+        ports:
+          - 8000:8000
+        buildCommand: bash -c './scripts/get_weights.sh && pip install cog && cog -p 8000'
