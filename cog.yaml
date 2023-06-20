@@ -21,6 +21,7 @@ build:
     - "transformers==4.25.1"
     - "ffmpeg-python==0.2.0"
     - "openai-whisper==20230308"
+    - "flask"
 
 # predict.py defines how predictions are run on your model
 predict: "predict.py:Predictor"
