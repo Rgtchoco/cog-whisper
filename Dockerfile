@@ -8,8 +8,6 @@ WORKDIR /app
 COPY . /app
 
 # Install dependencies
-RUN pip install -r requirements.txt
-
 # Run the get_weights.sh script to download pre-trained weights
 RUN ./scripts/get_weights.sh
 
